@@ -1,17 +1,17 @@
-version: '3.8'
+name: Message After Push
 
-services:
-  calculator-app:
-    image: python:3.9-slim
-    container_name: calculator-app
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./app:/app
-    working_dir: /app
-    command: >
-      sh -c "pip install flask &&
-             python app.py"
-    environment:
-      FLASK_APP: app.py
-      FLASK_ENV: development
+on:
+  push:
+    branches:
+      - main  # or whichever branch you want
+
+jobs:
+  push-message-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log message after push
+        run: echo "✅ A file was just pushed to the main branch!"
